@@ -2,7 +2,6 @@ package main
 
 import (
     "fmt"
-    //"io/ioutil"
     "log"
 	"net/http"
 	"sync"
@@ -25,8 +24,6 @@ func main() {
 		}
 
 		defer resp.Body.Close()
-
-		//body, err := ioutil.ReadAll(resp.Body)
 
 		if err != nil {
 			log.Fatal(err)

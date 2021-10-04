@@ -4,10 +4,12 @@ import (
     "fmt"
 	"sync"
 	"time"
+
+	"github.com/zaratsian/go-simulator/simulator"
 )
 
 const (
-	iterations = 200000
+	iterations = 20
 )
 
 func main() {
@@ -17,13 +19,17 @@ func main() {
 	var wg sync.WaitGroup
 
 	for i:=0; i<=iterations; i++ {
-		j := ((i + 1000000) * 10) / 5
-		fmt.Printf("%v\n",j)
+		payload := simulator.GeneratePayload()
+		fmt.Printf("%v\n",string(payload))
 	}
 
 	wg.Wait()
 
 	runtime := time.Now().Unix() - start_time
-	fmt.Printf("Runtime: %v\n seconds", runtime)
-	fmt.Printf("Speed:   %v\n events/second", iterations/runtime)
+	fmt.Printf("Runtime: %v\t seconds\n", runtime)
+	if runtime > 0 {
+		fmt.Printf("Speed:   %v\t events/second\n", iterations/runtime)
+	} else {
+		fmt.Printf("Speed:   %v\t events/second\n", iterations)
+	}
 }

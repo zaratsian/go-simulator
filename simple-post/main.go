@@ -6,9 +6,9 @@ import (
     "fmt"
     "log"
 	"net/http"
-	"time"
-	"math/rand"
 	"sync"
+
+	"github.com/zaratsian/go-simulator/simulator"
 )
 
 const (
@@ -16,21 +16,13 @@ const (
 	contentType = "application/json"
 )
 
-type Event struct {
-	Datetime	int64	`json:"datetime"`
-    Username	string  `json:"username"`
-	Text     	string  `json:"text"`
-	SimNumber 	int 	`json:"simnumber"`
-	GameMode	string  `json:"gamemode"`
-}
-
 func main() {
 
 	var wg sync.WaitGroup
 
 	for i:=0; i<5; i++ {
 
-		json_data := generatePayload()
+		json_data := simulator.GeneratePayload()
 
 		resp, err := http.Post(url, contentType,
 			bytes.NewBuffer(json_data))
@@ -47,28 +39,4 @@ func main() {
 	}
 
 	wg.Wait()
-}
-
-func generatePayload () []uint8 {
-
-	modes := []string{
-		"capture the flag",
-		"battleroyale",
-		"attack and defend",
-		"creative"}
-
-	values := Event{
-		int64(time.Now().Unix()),
-		"Alice", 
-		"Test text message",
-		rand.Intn(100),
-		modes[rand.Intn(len(modes))]}
-
-	json_data, err := json.Marshal(values)
-
-    if err != nil {
-        log.Fatal(err)
-    }
-
-	return json_data
 }

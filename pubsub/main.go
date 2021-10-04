@@ -7,6 +7,7 @@ import (
 		"math/rand"
 		"encoding/json"
 		"log"
+		"sync"
 
         "cloud.google.com/go/pubsub"
 )
@@ -26,8 +27,14 @@ type Event struct {
 
 func main () {
 
-	msg := generatePayload()
-	publish(gcp_project_id, pubsub_topic, msg)
+	var wg sync.WaitGroup
+
+	for i:=0; i<20; i++ {
+		msg := generatePayload()
+		publish(gcp_project_id, pubsub_topic, msg)
+	}
+
+	wg.Wait()
 
 }
 
