@@ -8,11 +8,11 @@ import (
 )
 
 type Event struct {
-	Datetime	int64	`json:"datetime"`
+    Datetime	int64	`json:"datetime"`
     Username	string  `json:"username"`
-	Text     	string  `json:"text"`
-	SimNumber 	int 	`json:"simnumber"`
-	GameMode	string  `json:"gamemode"`
+    Text     	string  `json:"text"`
+    SimNumber 	int 	`json:"simnumber"`
+    GameMode	string  `json:"gamemode"`
 }
 
 func GeneratePayload () []uint8 {
